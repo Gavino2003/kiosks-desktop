@@ -20,97 +20,58 @@ import java.util.ResourceBundle;
 @Controller
 public class DashboardController implements Initializable {
 
-    @FXML private Label welcomeLabel;
-    @FXML private Label roleLabel;
-    @FXML private VBox sideMenu;
+    @FXML private Label    welcomeLabel;
+    @FXML private Label    roleLabel;
+    @FXML private VBox     sideMenu;
     @FXML private StackPane contentArea;
 
-    @FXML private Button btnDashboard;
-    @FXML private Button btnUsers;
-    @FXML private Button btnStores;
-    @FXML private Button btnKiosks;
-    @FXML private Button btnProducts;
-    @FXML private Button btnOrders;
-    @FXML private Button btnStock;
+    @FXML private Button    btnDashboard;
+    @FXML private Button    btnUsers;
+    @FXML private Button    btnStores;
+    @FXML private Button    btnKiosks;
+    @FXML private Button    btnProducts;
+    @FXML private Button    btnOrders;
+    @FXML private Button    btnStock;
     @FXML private Separator sepGestao;
-    @FXML private Label lblGestao;
+    @FXML private Label     lblGestao;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        var user = SessionManager.getInstance().getCurrentUser();
-        welcomeLabel.setText("Bem-vindo, " + user.getUsername());
-        roleLabel.setText(user.getRole().getRoleName());
+        var user    = SessionManager.getInstance().getCurrentUser();
+        var session = SessionManager.getInstance();
 
-        boolean admin = SessionManager.getInstance().isAdmin();
-        boolean manager = SessionManager.getInstance().isManager();
+        welcomeLabel.setText("Bem-vindo, " + user.username);
+        roleLabel.setText(user.roleName);
 
-        btnUsers.setVisible(admin);
-        btnUsers.setManaged(admin);
-        btnStores.setVisible(admin);
-        btnStores.setManaged(admin);
-        btnKiosks.setVisible(admin);
-        btnKiosks.setManaged(admin);
-        btnProducts.setVisible(manager);
-        btnProducts.setManaged(manager);
+        boolean admin   = session.isAdmin();
+        boolean manager = session.isManager();
 
-        // Stock visível para quem não é admin (operator e manager) — leitura do armazém da sua loja
+        btnUsers.setVisible(admin);    btnUsers.setManaged(admin);
+        btnStores.setVisible(admin);   btnStores.setManaged(admin);
+        btnKiosks.setVisible(admin);   btnKiosks.setManaged(admin);
+        btnProducts.setVisible(manager); btnProducts.setManaged(manager);
+
         boolean operator = !manager;
-        btnStock.setVisible(operator);
-        btnStock.setManaged(operator);
+        btnStock.setVisible(operator); btnStock.setManaged(operator);
 
-        // esconder secção GESTÃO inteira se não tiver nenhum botão visível (OPERATOR)
-        boolean temGestao = manager; // manager inclui admin
-        sepGestao.setVisible(temGestao);
-        sepGestao.setManaged(temGestao);
-        lblGestao.setVisible(temGestao);
-        lblGestao.setManaged(temGestao);
+        sepGestao.setVisible(manager); sepGestao.setManaged(manager);
+        lblGestao.setVisible(manager); lblGestao.setManaged(manager);
 
         showHome();
     }
 
-    @FXML
-    private void showHome() {
-        loadView("home.fxml");
-    }
-
-    @FXML
-    private void showUsers() {
-        loadView("users.fxml");
-    }
-
-    @FXML
-    private void showStores() {
-        loadView("stores.fxml");
-    }
-
-    @FXML
-    private void showKiosks() {
-        loadView("kiosks.fxml");
-    }
-
-    @FXML
-    private void showProducts() {
-        loadView("products.fxml");
-    }
-
-    @FXML
-    private void showOrders() {
-        loadView("orders.fxml");
-    }
-
-    @FXML
-    private void showStock() {
-        loadView("stock.fxml");
-    }
+    @FXML private void showHome()     { loadView("home.fxml"); }
+    @FXML private void showUsers()    { loadView("users.fxml"); }
+    @FXML private void showStores()   { loadView("stores.fxml"); }
+    @FXML private void showKiosks()   { loadView("kiosks.fxml"); }
+    @FXML private void showProducts() { loadView("products.fxml"); }
+    @FXML private void showOrders()   { loadView("orders.fxml"); }
+    @FXML private void showStock()    { loadView("stock.fxml"); }
 
     @FXML
     private void handleLogout() {
         SessionManager.getInstance().logout();
-        try {
-            MainApp.showLogin();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        try { MainApp.showLogin(); } catch (IOException e) { e.printStackTrace(); }
     }
 
     private void loadView(String fxml) {

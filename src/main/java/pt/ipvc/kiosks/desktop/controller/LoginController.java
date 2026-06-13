@@ -7,9 +7,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import pt.ipvc.kiosks.bll.services.AuthService;
-import pt.ipvc.kiosks.dal.entities.User;
 import pt.ipvc.kiosks.desktop.app.MainApp;
+import pt.ipvc.kiosks.desktop.client.CoreApiClient;
+import pt.ipvc.kiosks.desktop.dto.UserDto;
 import pt.ipvc.kiosks.desktop.util.SessionManager;
 
 import java.net.URL;
@@ -18,12 +18,11 @@ import java.util.ResourceBundle;
 @Controller
 public class LoginController implements Initializable {
 
-    @FXML private TextField usernameField;
+    @FXML private TextField     usernameField;
     @FXML private PasswordField passwordField;
-    @FXML private Label errorLabel;
+    @FXML private Label         errorLabel;
 
-    @Autowired
-    private AuthService authService;
+    @Autowired private CoreApiClient api;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -36,20 +35,11 @@ public class LoginController implements Initializable {
         String username = usernameField.getText().trim();
         String password = passwordField.getText();
 
-        if (username.isEmpty() && password.isEmpty()) {
-            showError("Preencha o username e a password.");
-            return;
-        }
-        if (username.isEmpty()) {
-            showError("Preencha o username.");
-            return;
-        }
-        if (password.isEmpty()) {
-            showError("Preencha a password.");
-            return;
-        }
+        if (username.isEmpty() && password.isEmpty()) { showError("Preencha o username e a password."); return; }
+        if (username.isEmpty()) { showError("Preencha o username."); return; }
+        if (password.isEmpty()) { showError("Preencha a password."); return; }
 
-        User user = authService.login(username, password);
+        UserDto user = api.login(username, password);
         if (user == null) {
             showError("Credenciais inválidas.");
             passwordField.requestFocus();
@@ -64,13 +54,6 @@ public class LoginController implements Initializable {
         }
     }
 
-    private void showError(String msg) {
-        errorLabel.setText(msg);
-        errorLabel.setVisible(true);
-    }
-
-    private void clearError() {
-        errorLabel.setText("");
-        errorLabel.setVisible(false);
-    }
+    private void showError(String msg) { errorLabel.setText(msg); errorLabel.setVisible(true); }
+    private void clearError()          { errorLabel.setText(""); errorLabel.setVisible(false); }
 }

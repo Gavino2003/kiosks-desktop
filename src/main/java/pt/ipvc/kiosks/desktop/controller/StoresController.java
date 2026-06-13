@@ -7,8 +7,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import pt.ipvc.kiosks.dal.entities.Store;
-import pt.ipvc.kiosks.dal.repository.StoreRepository;
+import pt.ipvc.kiosks.desktop.client.CoreApiClient;
+import pt.ipvc.kiosks.desktop.dto.StoreDto;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,39 +16,35 @@ import java.util.ResourceBundle;
 @Controller
 public class StoresController implements Initializable {
 
-    @FXML private TableView<Store> tableStores;
-    @FXML private TableColumn<Store, String> colName;
-    @FXML private TableColumn<Store, String> colType;
-    @FXML private TableColumn<Store, String> colCity;
-    @FXML private TableColumn<Store, String> colActive;
+    @FXML private TableView<StoreDto>          tableStores;
+    @FXML private TableColumn<StoreDto,String> colName;
+    @FXML private TableColumn<StoreDto,String> colType;
+    @FXML private TableColumn<StoreDto,String> colCity;
+    @FXML private TableColumn<StoreDto,String> colActive;
 
-    @FXML private Label lblFormTitle;
-    @FXML private TextField txtName;
+    @FXML private Label          lblFormTitle;
+    @FXML private TextField      txtName;
     @FXML private ComboBox<String> cmbType;
-    @FXML private TextField txtAddress;
-    @FXML private TextField txtCity;
-    @FXML private TextField txtPostal;
-    @FXML private Button btnSave;
-    @FXML private Button btnDelete;
-    @FXML private Button btnCancelEdit;
-    @FXML private Label lblStatus;
+    @FXML private TextField      txtAddress;
+    @FXML private TextField      txtCity;
+    @FXML private TextField      txtPostal;
+    @FXML private Button         btnSave;
+    @FXML private Button         btnDelete;
+    @FXML private Button         btnCancelEdit;
+    @FXML private Label          lblStatus;
 
-    @Autowired private StoreRepository storeRepository;
+    @Autowired private CoreApiClient api;
 
-    private Store editingStore = null;
-
-    private void showStatus(String msg, boolean error) {
-        lblStatus.setText(msg);
-        lblStatus.getStyleClass().removeAll("error", "success");
-        lblStatus.getStyleClass().add(error ? "error" : "success");
-    }
+    private StoreDto editingStore = null;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        colName.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStoreName()));
-        colType.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStoreType()));
-        colCity.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getCity() != null ? c.getValue().getCity() : ""));
-        colActive.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getActive() ? "Ativa" : "Inativa"));
+        colName.setCellValueFactory(c   -> new SimpleStringProperty(c.getValue().storeName));
+        colType.setCellValueFactory(c   -> new SimpleStringProperty(c.getValue().storeType));
+        colCity.setCellValueFactory(c   -> new SimpleStringProperty(
+                c.getValue().city != null ? c.getValue().city : ""));
+        colActive.setCellValueFactory(c -> new SimpleStringProperty(
+                Boolean.TRUE.equals(c.getValue().active) ? "Ativa" : "Inativa"));
 
         cmbType.setItems(FXCollections.observableArrayList("EYEWEAR", "MAKEUP", "JEWELLERY"));
         cmbType.getSelectionModel().selectFirst();
@@ -65,10 +61,8 @@ public class StoresController implements Initializable {
         editingStore = null;
         lblFormTitle.setText("Nova Loja");
         btnSave.setText("Criar Loja");
-        btnCancelEdit.setVisible(false);
-        btnCancelEdit.setManaged(false);
-        btnDelete.setVisible(false);
-        btnDelete.setManaged(false);
+        btnCancelEdit.setVisible(false); btnCancelEdit.setManaged(false);
+        btnDelete.setVisible(false);     btnDelete.setManaged(false);
         txtName.clear(); txtAddress.clear(); txtCity.clear(); txtPostal.clear();
         cmbType.getSelectionModel().selectFirst();
         lblStatus.setText("");
@@ -76,25 +70,29 @@ public class StoresController implements Initializable {
         tableStores.getSelectionModel().clearSelection();
     }
 
-    private void enterEditMode(Store store) {
+    private void enterEditMode(StoreDto store) {
         editingStore = store;
         lblFormTitle.setText("Editar Loja");
         btnSave.setText("Guardar Alterações");
-        btnCancelEdit.setVisible(true);
-        btnCancelEdit.setManaged(true);
-        btnDelete.setVisible(true);
-        btnDelete.setManaged(true);
-        txtName.setText(store.getStoreName());
-        cmbType.setValue(store.getStoreType());
-        txtAddress.setText(store.getAddress() != null ? store.getAddress() : "");
-        txtCity.setText(store.getCity() != null ? store.getCity() : "");
-        txtPostal.setText(store.getPostalCode() != null ? store.getPostalCode() : "");
+        btnCancelEdit.setVisible(true); btnCancelEdit.setManaged(true);
+        btnDelete.setVisible(true);     btnDelete.setManaged(true);
+        txtName.setText(store.storeName);
+        cmbType.setValue(store.storeType);
+        txtAddress.setText(store.address  != null ? store.address  : "");
+        txtCity.setText(store.city        != null ? store.city      : "");
+        txtPostal.setText(store.postalCode != null ? store.postalCode : "");
         lblStatus.setText("");
         lblStatus.getStyleClass().removeAll("error", "success");
     }
 
     private void loadStores() {
-        tableStores.setItems(FXCollections.observableArrayList(storeRepository.findAll()));
+        tableStores.setItems(FXCollections.observableArrayList(api.getStores()));
+    }
+
+    private void showStatus(String msg, boolean error) {
+        lblStatus.setText(msg);
+        lblStatus.getStyleClass().removeAll("error", "success");
+        lblStatus.getStyleClass().add(error ? "error" : "success");
     }
 
     @FXML
@@ -107,57 +105,54 @@ public class StoresController implements Initializable {
 
         if (name.isEmpty()) { showStatus("O nome da loja é obrigatório.", true); return; }
 
-        if (editingStore == null) {
-            storeRepository.save(new Store(name, type, address, city, postal));
-            showStatus("Loja criada com sucesso.", false);
-        } else {
-            editingStore.setStoreName(name);
-            editingStore.setStoreType(type);
-            editingStore.setAddress(address.isEmpty() ? null : address);
-            editingStore.setCity(city.isEmpty() ? null : city);
-            editingStore.setPostalCode(postal.isEmpty() ? null : postal);
-            storeRepository.save(editingStore);
-            showStatus("Loja atualizada com sucesso.", false);
+        try {
+            if (editingStore == null) {
+                api.createStore(name, type, address.isEmpty() ? null : address,
+                        city.isEmpty() ? null : city, postal.isEmpty() ? null : postal);
+                showStatus("Loja criada com sucesso.", false);
+            } else {
+                api.updateStore(editingStore.id, name, type,
+                        address.isEmpty() ? null : address,
+                        city.isEmpty()    ? null : city,
+                        postal.isEmpty()  ? null : postal);
+                showStatus("Loja atualizada com sucesso.", false);
+            }
+            enterCreateMode();
+            loadStores();
+        } catch (Exception e) {
+            showStatus("Erro: " + e.getMessage(), true);
         }
-        enterCreateMode();
-        loadStores();
     }
 
     @FXML
     private void handleToggleActive() {
-        Store selected = tableStores.getSelectionModel().getSelectedItem();
+        StoreDto selected = tableStores.getSelectionModel().getSelectedItem();
         if (selected == null) { showStatus("Selecione uma loja.", true); return; }
-        selected.setActive(!selected.getActive());
-        storeRepository.save(selected);
-        showStatus("Estado alterado: " + (selected.getActive() ? "Ativa" : "Inativa"), false);
-        loadStores();
+        try {
+            api.toggleStoreActive(selected.id);
+            showStatus("Estado alterado.", false);
+            loadStores();
+        } catch (Exception e) {
+            showStatus("Erro: " + e.getMessage(), true);
+        }
     }
 
     @FXML
     private void handleDelete() {
         if (editingStore == null) { showStatus("Selecione uma loja.", true); return; }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                "Apagar a loja \"" + editingStore.getStoreName() + "\" definitivamente?\n" +
+                "Apagar a loja \"" + editingStore.storeName + "\" definitivamente?\n" +
                 "Isto irá apagar também todos os produtos, categorias e quiosques associados.",
                 ButtonType.YES, ButtonType.NO);
         alert.setTitle("Confirmar eliminação");
         alert.setHeaderText(null);
         alert.showAndWait().ifPresent(bt -> {
             if (bt == ButtonType.YES) {
-                try {
-                    storeRepository.delete(editingStore);
-                    enterCreateMode();
-                    loadStores();
-                } catch (Exception e) {
-                    showStatus("Erro ao apagar: " + e.getMessage(), true);
-                }
+                showStatus("Eliminação via API não suportada nesta versão.", true);
             }
         });
     }
 
-    @FXML
-    private void handleCancelEdit() { enterCreateMode(); }
-
-    @FXML
-    private void handleRefresh() { enterCreateMode(); loadStores(); }
+    @FXML private void handleCancelEdit() { enterCreateMode(); }
+    @FXML private void handleRefresh()    { enterCreateMode(); loadStores(); }
 }

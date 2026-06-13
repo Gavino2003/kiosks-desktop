@@ -22,17 +22,10 @@
     </properties>
 
     <dependencies>
-        <!-- Core: entidades, repositórios e serviços -->
-        <dependency>
-            <groupId>pt.ipvc</groupId>
-            <artifactId>core</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <!-- Spring Boot (contexto e injeção de dependências) -->
+        <!-- Spring Boot: contexto, injeção de dependências, RestTemplate -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <!-- JavaFX -->
@@ -45,13 +38,6 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>21.0.2</version>
-        </dependency>
-
-        <!-- PostgreSQL (transitivo via core, mas declarado explicitamente para clareza) -->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
         </dependency>
     </dependencies>
 

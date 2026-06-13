@@ -1,11 +1,11 @@
 package pt.ipvc.kiosks.desktop.util;
 
-import pt.ipvc.kiosks.dal.entities.User;
+import pt.ipvc.kiosks.desktop.dto.UserDto;
 
 public class SessionManager {
 
     private static SessionManager instance;
-    private User currentUser;
+    private UserDto currentUser;
 
     private SessionManager() {}
 
@@ -14,23 +14,21 @@ public class SessionManager {
         return instance;
     }
 
-    public User getCurrentUser() { return currentUser; }
-    public void setCurrentUser(User user) { this.currentUser = user; }
-
+    public UserDto getCurrentUser() { return currentUser; }
+    public void setCurrentUser(UserDto user) { this.currentUser = user; }
     public void logout() { currentUser = null; }
 
     public boolean isAdmin() {
-        return currentUser != null && currentUser.getRole() != null
-                && "ADMIN".equals(currentUser.getRole().getRoleName());
+        return currentUser != null && "ADMIN".equals(currentUser.roleName);
     }
 
     public boolean isManager() {
-        return currentUser != null && currentUser.getRole() != null
-                && ("MANAGER".equals(currentUser.getRole().getRoleName()) || isAdmin());
+        return currentUser != null &&
+                ("MANAGER".equals(currentUser.roleName) || isAdmin());
     }
 
     public boolean isOperator() {
-        return currentUser != null && currentUser.getRole() != null
-                && ("OPERATOR".equals(currentUser.getRole().getRoleName()) || isManager());
+        return currentUser != null &&
+                ("OPERATOR".equals(currentUser.roleName) || isManager());
     }
 }
