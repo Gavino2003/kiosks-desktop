@@ -3,7 +3,7 @@
 
 /* ── Login ── */
 .login-root    { -fx-background-color: #f0f4f8; }
-.login-header  { -fx-background-color: #1a3a5c; -fx-padding: 32 0 32 0; }
+.login-header  { -fx-background-color: #1a3a5c; -fx-padding: 28 0 28 0; }
 .login-title   { -fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold; }
 .login-subtitle { -fx-text-fill: #90b8d8; -fx-font-size: 13px; }
 .login-card {

@@ -42,7 +42,7 @@ public class MainApp extends Application {
     }
 
     public static void showLogin() throws IOException {
-        loadScene("login.fxml", 480, 360);
+        loadScene("login.fxml", 480, 560);
         primaryStage.setTitle("Kiosks BackOffice — Login");
     }
 
