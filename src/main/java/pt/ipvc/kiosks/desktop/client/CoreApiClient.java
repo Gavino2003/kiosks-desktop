@@ -59,6 +59,10 @@ public class CoreApiClient {
         rest.exchange(baseUrl + "/api/auth/users/" + id, HttpMethod.PUT, req, String.class);
     }
 
+    public void deleteUser(Long userId) {
+        rest.delete(baseUrl + "/api/auth/users/" + userId);
+    }
+
     public void toggleUserActive(Long userId) {
         rest.patchForObject(baseUrl + "/api/auth/users/" + userId + "/active",
                 null, Void.class);

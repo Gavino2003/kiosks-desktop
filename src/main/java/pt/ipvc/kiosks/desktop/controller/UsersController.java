@@ -198,7 +198,24 @@ public class UsersController implements Initializable {
 
     @FXML
     private void handleDelete() {
-        showStatus("Employee deletion is not supported in this version.", true);
+        if (editingUser == null) { showStatus("Please select an employee.", true); return; }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                "Permanently delete employee \"" + editingUser.username + "\"?",
+                ButtonType.YES, ButtonType.NO);
+        alert.setTitle("Confirm deletion");
+        alert.setHeaderText(null);
+        alert.showAndWait().ifPresent(bt -> {
+            if (bt == ButtonType.YES) {
+                try {
+                    api.deleteUser(editingUser.id);
+                    showStatus("Employee deleted.", false);
+                    enterCreateMode();
+                    loadUsers();
+                } catch (Exception e) {
+                    showStatus("Error: " + e.getMessage(), true);
+                }
+            }
+        });
     }
 
     @FXML private void handleCancelEdit() { enterCreateMode(); }
