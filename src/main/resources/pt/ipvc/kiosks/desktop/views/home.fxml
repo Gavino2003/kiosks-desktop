@@ -25,7 +25,7 @@
             <Label text="online terminals" styleClass="kpi-sub"/>
         </VBox>
         <VBox styleClass="kpi-card kpi-orange" spacing="6" HBox.hgrow="ALWAYS">
-            <Label text="USERS" styleClass="kpi-label"/>
+            <Label text="EMPLOYEES" styleClass="kpi-label"/>
             <Label fx:id="lblTotalUsers" text="—" styleClass="kpi-value"/>
             <Label text="registered accounts" styleClass="kpi-sub"/>
         </VBox>

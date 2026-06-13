@@ -34,15 +34,29 @@ public class CoreApiClient {
         return getList("/api/auth/users", new ParameterizedTypeReference<>() {});
     }
 
-    public UserDto createUser(String username, String password, String email,
-                               String roleName, Long storeId) {
+    public void createUser(String username, String password, String email,
+                           String roleName, Long storeId) {
         Map<String, Object> body = new java.util.HashMap<>();
         body.put("username", username);
         body.put("password", password);
         body.put("email", email);
         body.put("roleName", roleName);
         if (storeId != null) body.put("storeId", storeId);
-        return rest.postForObject(baseUrl + "/api/auth/users", body, UserDto.class);
+        HttpEntity<Map<String, Object>> req = new HttpEntity<>(body, jsonHeaders());
+        ResponseEntity<String> resp = rest.exchange(
+                baseUrl + "/api/auth/users", HttpMethod.POST, req, String.class);
+        if (!resp.getStatusCode().is2xxSuccessful()) {
+            throw new RuntimeException(resp.getBody());
+        }
+    }
+
+    public void updateUser(Long id, String email, String roleName, Long storeId) {
+        Map<String, Object> body = new java.util.HashMap<>();
+        body.put("email", email);
+        body.put("roleName", roleName);
+        body.put("storeId", storeId);
+        HttpEntity<Map<String, Object>> req = new HttpEntity<>(body, jsonHeaders());
+        rest.exchange(baseUrl + "/api/auth/users/" + id, HttpMethod.PUT, req, String.class);
     }
 
     public void toggleUserActive(Long userId) {

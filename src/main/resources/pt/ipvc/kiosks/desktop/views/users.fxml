@@ -7,7 +7,7 @@
       styleClass="view-root" spacing="16">
 
     <HBox alignment="CENTER_LEFT" spacing="12">
-        <Label text="User Management" styleClass="view-title"/>
+        <Label text="Employee Management" styleClass="view-title"/>
         <Region HBox.hgrow="ALWAYS"/>
         <Button text="Refresh" onAction="#handleRefresh" styleClass="btn-secondary"/>
     </HBox>

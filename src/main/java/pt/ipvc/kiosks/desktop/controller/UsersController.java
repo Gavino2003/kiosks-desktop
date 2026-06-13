@@ -81,8 +81,8 @@ public class UsersController implements Initializable {
 
     private void enterCreateMode() {
         editingUser = null;
-        lblFormTitle.setText("New User");
-        btnSave.setText("Create User");
+        lblFormTitle.setText("New Employee");
+        btnSave.setText("Create Employee");
         btnCancelEdit.setVisible(false); btnCancelEdit.setManaged(false);
         btnDelete.setVisible(false);     btnDelete.setManaged(false);
         txtUsername.setDisable(false);
@@ -96,7 +96,7 @@ public class UsersController implements Initializable {
 
     private void enterEditMode(UserDto user) {
         editingUser = user;
-        lblFormTitle.setText("Edit User");
+        lblFormTitle.setText("Edit Employee");
         btnSave.setText("Save Changes");
         btnCancelEdit.setVisible(true); btnCancelEdit.setManaged(true);
         btnDelete.setVisible(true);     btnDelete.setManaged(true);
@@ -108,7 +108,7 @@ public class UsersController implements Initializable {
         storeOptions.stream()
                 .filter(s -> s != null && s.id.equals(user.storeId))
                 .findFirst()
-                .ifPresentOrElse(s -> cmbStore.setValue(s),
+                .ifPresentOrElse(cmbStore::setValue,
                         () -> cmbStore.getSelectionModel().selectFirst());
         lblStatus.setText("");
         lblStatus.getStyleClass().removeAll("error", "success");
@@ -129,7 +129,7 @@ public class UsersController implements Initializable {
         if (editingUser == null) {
             handleCreate();
         } else {
-            showStatus("Use the Enable/Disable button to change user status.", false);
+            handleUpdate();
         }
     }
 
@@ -151,7 +151,31 @@ public class UsersController implements Initializable {
 
         try {
             api.createUser(username, password, email, role, store != null ? store.id : null);
-            showStatus("User created successfully.", false);
+            showStatus("Employee created successfully.", false);
+            enterCreateMode();
+            loadUsers();
+        } catch (Exception e) {
+            showStatus(e.getMessage(), true);
+        }
+    }
+
+    private void handleUpdate() {
+        String   email = txtEmail.getText().trim();
+        String   role  = cmbRole.getValue();
+        StoreDto store = cmbStore.getValue();
+
+        if (email.isEmpty()) {
+            showStatus("Email is required.", true);
+            return;
+        }
+        if (("MANAGER".equals(role) || "OPERATOR".equals(role)) && store == null) {
+            showStatus("Manager and Operator roles require an assigned store.", true);
+            return;
+        }
+
+        try {
+            api.updateUser(editingUser.id, email, role, store != null ? store.id : null);
+            showStatus("Employee updated successfully.", false);
             enterCreateMode();
             loadUsers();
         } catch (Exception e) {
@@ -162,10 +186,10 @@ public class UsersController implements Initializable {
     @FXML
     private void handleToggleActive() {
         UserDto selected = tableUsers.getSelectionModel().getSelectedItem();
-        if (selected == null) { showStatus("Please select a user.", true); return; }
+        if (selected == null) { showStatus("Please select an employee.", true); return; }
         try {
             api.toggleUserActive(selected.id);
-            showStatus("User status updated.", false);
+            showStatus("Employee status updated.", false);
             loadUsers();
         } catch (Exception e) {
             showStatus("Error: " + e.getMessage(), true);
@@ -174,7 +198,7 @@ public class UsersController implements Initializable {
 
     @FXML
     private void handleDelete() {
-        showStatus("User deletion is not supported in this version.", true);
+        showStatus("Employee deletion is not supported in this version.", true);
     }
 
     @FXML private void handleCancelEdit() { enterCreateMode(); }

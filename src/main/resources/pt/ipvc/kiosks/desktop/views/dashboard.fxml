@@ -36,7 +36,7 @@
                     styleClass="sidebar-btn" maxWidth="Infinity"/>
             <Button fx:id="btnKiosks"    text="Kiosks"     onAction="#showKiosks"
                     styleClass="sidebar-btn" maxWidth="Infinity"/>
-            <Button fx:id="btnUsers"     text="Users"      onAction="#showUsers"
+            <Button fx:id="btnUsers"     text="Employees"  onAction="#showUsers"
                     styleClass="sidebar-btn" maxWidth="Infinity"/>
         </VBox>
     </left>
