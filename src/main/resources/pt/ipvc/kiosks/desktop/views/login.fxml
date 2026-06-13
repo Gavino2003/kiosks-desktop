@@ -1,35 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="pt.ipvc.kiosks.desktop.controller.LoginController"
-      alignment="CENTER" spacing="0" styleClass="login-root">
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="pt.ipvc.kiosks.desktop.controller.LoginController"
+            styleClass="login-root">
 
-    <VBox alignment="CENTER" spacing="6" styleClass="login-header">
-        <Label text="Kiosks BackOffice" styleClass="login-title"/>
-        <Label text="Kiosk Management System" styleClass="login-subtitle"/>
-    </VBox>
-
-    <VBox alignment="CENTER" spacing="14" styleClass="login-card">
-        <Label text="Sign In" styleClass="card-title"/>
-
-        <VBox spacing="4">
-            <Label text="Username" styleClass="field-label"/>
-            <TextField fx:id="usernameField" promptText="Enter your username" styleClass="text-field"/>
+    <top>
+        <VBox alignment="CENTER" spacing="6" styleClass="login-header">
+            <Label text="Kiosks BackOffice" styleClass="login-title"/>
+            <Label text="Kiosk Management System" styleClass="login-subtitle"/>
         </VBox>
+    </top>
 
-        <VBox spacing="4">
-            <Label text="Password" styleClass="field-label"/>
-            <PasswordField fx:id="passwordField" promptText="Enter your password" styleClass="text-field"
-                          onAction="#handleLogin"/>
-        </VBox>
+    <center>
+        <StackPane>
+            <VBox alignment="CENTER" spacing="14" styleClass="login-card" maxWidth="380">
+                <Label text="Sign In" styleClass="card-title"/>
 
-        <Label fx:id="errorLabel" styleClass="error-label" wrapText="true"/>
+                <VBox spacing="4">
+                    <Label text="Username" styleClass="field-label"/>
+                    <TextField fx:id="usernameField" promptText="Enter your username"/>
+                </VBox>
 
-        <Button text="Sign In" onAction="#handleLogin" styleClass="btn-primary" maxWidth="Infinity"/>
-    </VBox>
+                <VBox spacing="4">
+                    <Label text="Password" styleClass="field-label"/>
+                    <PasswordField fx:id="passwordField" promptText="Enter your password"
+                                  onAction="#handleLogin"/>
+                </VBox>
 
-    <Label text="IPVC — Project II 2025/2026" styleClass="login-footer"/>
-</VBox>
+                <Label fx:id="errorLabel" styleClass="error-label" wrapText="true"/>
+
+                <Button text="Sign In" onAction="#handleLogin" styleClass="btn-primary" maxWidth="Infinity"/>
+            </VBox>
+        </StackPane>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER" styleClass="login-footer-bar">
+            <Label text="IPVC — Project II 2025/2026" styleClass="login-footer"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

@@ -2,18 +2,19 @@
 .root { -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; -fx-font-size: 13px; }
 
 /* ── Login ── */
-.login-root { -fx-background-color: #f0f4f8; -fx-padding: 0; }
-.login-header { -fx-background-color: #1a3a5c; -fx-padding: 32 0 32 0; }
-.login-title { -fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold; }
+.login-root    { -fx-background-color: #f0f4f8; }
+.login-header  { -fx-background-color: #1a3a5c; -fx-padding: 32 0 32 0; }
+.login-title   { -fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold; }
 .login-subtitle { -fx-text-fill: #90b8d8; -fx-font-size: 13px; }
 .login-card {
     -fx-background-color: white;
     -fx-padding: 32;
-    -fx-max-width: 400px;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 10, 0, 0, 3);
-    -fx-border-radius: 8; -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 12, 0, 0, 4);
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
 }
-.login-footer { -fx-text-fill: #999; -fx-font-size: 11px; -fx-padding: 16 0 0 0; }
+.login-footer-bar { -fx-padding: 16 0 16 0; }
+.login-footer { -fx-text-fill: #aaa; -fx-font-size: 11px; }
 .card-title { -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1a3a5c; }
 .field-label { -fx-text-fill: #555; -fx-font-size: 12px; }
 .error-label { -fx-text-fill: #c0392b; -fx-font-size: 12px; -fx-min-height: 16; }
