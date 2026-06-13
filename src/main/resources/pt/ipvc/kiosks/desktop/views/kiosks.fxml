@@ -7,24 +7,24 @@
       styleClass="view-root" spacing="16">
 
     <HBox alignment="CENTER_LEFT" spacing="12">
-        <Label text="Gestão de Quiosques" styleClass="view-title"/>
+        <Label text="Kiosk Management" styleClass="view-title"/>
         <Region HBox.hgrow="ALWAYS"/>
-        <Button text="Atualizar" onAction="#handleRefresh" styleClass="btn-secondary"/>
+        <Button text="Refresh" onAction="#handleRefresh" styleClass="btn-secondary"/>
     </HBox>
 
     <TableView fx:id="tableKiosks" VBox.vgrow="ALWAYS">
         <columns>
-            <TableColumn fx:id="colName"   text="Nome"     prefWidth="160"/>
-            <TableColumn fx:id="colSerial" text="Nº Série" prefWidth="130"/>
-            <TableColumn fx:id="colModel"  text="Modelo"   prefWidth="130"/>
-            <TableColumn fx:id="colStatus" text="Estado"   prefWidth="110"/>
-            <TableColumn fx:id="colStore"  text="Loja"     prefWidth="160"/>
+            <TableColumn fx:id="colName"   text="Name"          prefWidth="160"/>
+            <TableColumn fx:id="colSerial" text="Serial No."    prefWidth="130"/>
+            <TableColumn fx:id="colModel"  text="Model"         prefWidth="130"/>
+            <TableColumn fx:id="colStatus" text="Status"        prefWidth="110"/>
+            <TableColumn fx:id="colStore"  text="Store"         prefWidth="160"/>
         </columns>
-        <placeholder><Label text="Sem quiosques registados."/></placeholder>
+        <placeholder><Label text="No kiosks registered."/></placeholder>
     </TableView>
 
     <VBox styleClass="form-card" spacing="10">
-        <Label fx:id="lblFormTitle" text="Novo Quiosque" styleClass="card-title"/>
+        <Label fx:id="lblFormTitle" text="New Kiosk" styleClass="card-title"/>
         <GridPane hgap="12" vgap="8">
             <columnConstraints>
                 <ColumnConstraints minWidth="100"/>
@@ -33,27 +33,27 @@
                 <ColumnConstraints minWidth="160" hgrow="ALWAYS"/>
             </columnConstraints>
             <HBox GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="2">
-                <Label text="Nome"/>
+                <Label text="Name"/>
                 <Label text=" *" styleClass="required-mark"/>
             </HBox>
             <TextField fx:id="txtName" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
             <HBox GridPane.columnIndex="2" GridPane.rowIndex="0" spacing="2">
-                <Label text="Loja"/>
+                <Label text="Store"/>
                 <Label text=" *" styleClass="required-mark"/>
             </HBox>
             <ComboBox fx:id="cmbStore" maxWidth="Infinity" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
-            <Label text="Nº Série:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <Label text="Serial No.:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
             <TextField fx:id="txtSerial" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-            <Label text="Modelo:" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+            <Label text="Model:" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
             <TextField fx:id="txtModel" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
-            <Label text="Estado:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <Label text="Status:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
             <ComboBox fx:id="cmbStatus" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
         </GridPane>
-        <Label text="* Campo obrigatório" styleClass="required-hint"/>
+        <Label text="* Required field" styleClass="required-hint"/>
         <HBox spacing="8">
-            <Button fx:id="btnSave"       text="Criar Quiosque" onAction="#handleSave"       styleClass="btn-primary"/>
-            <Button fx:id="btnDelete"     text="Apagar"         onAction="#handleDelete"     styleClass="btn-danger"/>
-            <Button fx:id="btnCancelEdit" text="Cancelar"       onAction="#handleCancelEdit" styleClass="btn-secondary"/>
+            <Button fx:id="btnSave"       text="Save Kiosk" onAction="#handleSave"       styleClass="btn-primary"/>
+            <Button fx:id="btnDelete"     text="Delete"     onAction="#handleDelete"     styleClass="btn-danger"/>
+            <Button fx:id="btnCancelEdit" text="Cancel"     onAction="#handleCancelEdit" styleClass="btn-secondary"/>
         </HBox>
         <Label fx:id="lblStatus" styleClass="status-label" wrapText="true"/>
     </VBox>

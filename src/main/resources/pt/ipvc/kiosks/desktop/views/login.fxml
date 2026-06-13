@@ -9,27 +9,27 @@
 
     <VBox alignment="CENTER" spacing="6" styleClass="login-header">
         <Label text="Kiosks BackOffice" styleClass="login-title"/>
-        <Label text="Sistema de Gestão de Quiosques" styleClass="login-subtitle"/>
+        <Label text="Kiosk Management System" styleClass="login-subtitle"/>
     </VBox>
 
     <VBox alignment="CENTER" spacing="14" styleClass="login-card">
-        <Label text="Autenticação" styleClass="card-title"/>
+        <Label text="Sign In" styleClass="card-title"/>
 
         <VBox spacing="4">
             <Label text="Username" styleClass="field-label"/>
-            <TextField fx:id="usernameField" promptText="Introduza o username" styleClass="text-field"/>
+            <TextField fx:id="usernameField" promptText="Enter your username" styleClass="text-field"/>
         </VBox>
 
         <VBox spacing="4">
             <Label text="Password" styleClass="field-label"/>
-            <PasswordField fx:id="passwordField" promptText="Introduza a password" styleClass="text-field"
+            <PasswordField fx:id="passwordField" promptText="Enter your password" styleClass="text-field"
                           onAction="#handleLogin"/>
         </VBox>
 
         <Label fx:id="errorLabel" styleClass="error-label" wrapText="true"/>
 
-        <Button text="Entrar" onAction="#handleLogin" styleClass="btn-primary" maxWidth="Infinity"/>
+        <Button text="Sign In" onAction="#handleLogin" styleClass="btn-primary" maxWidth="Infinity"/>
     </VBox>
 
-    <Label text="IPVC — Projeto II 2025/2026" styleClass="login-footer"/>
+    <Label text="IPVC — Project II 2025/2026" styleClass="login-footer"/>
 </VBox>

@@ -7,44 +7,44 @@
       styleClass="view-root" spacing="16">
 
     <HBox alignment="CENTER_LEFT" spacing="12">
-        <Label text="Gestão de Encomendas" styleClass="view-title"/>
+        <Label text="Order Management" styleClass="view-title"/>
         <Region HBox.hgrow="ALWAYS"/>
-        <Button text="Atualizar" onAction="#handleRefresh" styleClass="btn-secondary"/>
+        <Button text="Refresh" onAction="#handleRefresh" styleClass="btn-secondary"/>
     </HBox>
 
-    <!-- Filtros -->
+    <!-- Filters -->
     <HBox spacing="12" alignment="CENTER_LEFT" styleClass="filter-bar">
-        <Label text="Filtrar por estado:"/>
+        <Label text="Filter by status:"/>
         <ComboBox fx:id="cmbFilterStatus" prefWidth="130"/>
-        <Button text="Filtrar" onAction="#handleFilter" styleClass="btn-secondary"/>
+        <Button text="Filter" onAction="#handleFilter" styleClass="btn-secondary"/>
         <Separator orientation="VERTICAL"/>
-        <Label text="Pesquisar referência:"/>
-        <TextField fx:id="txtSearchRef" promptText="ex: ORD-2026-AB12CD34" prefWidth="220"
+        <Label text="Search reference:"/>
+        <TextField fx:id="txtSearchRef" promptText="e.g. ORD-2026-AB12CD34" prefWidth="220"
                    onAction="#handleSearch"/>
-        <Button text="Pesquisar" onAction="#handleSearch" styleClass="btn-secondary"/>
+        <Button text="Search" onAction="#handleSearch" styleClass="btn-secondary"/>
     </HBox>
 
     <TableView fx:id="tableOrders" VBox.vgrow="ALWAYS">
         <columns>
-            <TableColumn fx:id="colRef"    text="Referência"   prefWidth="170"/>
-            <TableColumn fx:id="colStatus" text="Estado"       prefWidth="100"/>
-            <TableColumn fx:id="colTotal"  text="Total"        prefWidth="90"/>
-            <TableColumn fx:id="colStore"  text="Loja"         prefWidth="140"/>
-            <TableColumn fx:id="colKiosk"  text="Quiosque"     prefWidth="150"/>
-            <TableColumn fx:id="colDate"   text="Data"         prefWidth="135"/>
+            <TableColumn fx:id="colRef"    text="Reference"  prefWidth="170"/>
+            <TableColumn fx:id="colStatus" text="Status"     prefWidth="100"/>
+            <TableColumn fx:id="colTotal"  text="Total"      prefWidth="90"/>
+            <TableColumn fx:id="colStore"  text="Store"      prefWidth="140"/>
+            <TableColumn fx:id="colKiosk"  text="Kiosk"      prefWidth="150"/>
+            <TableColumn fx:id="colDate"   text="Date"       prefWidth="135"/>
         </columns>
-        <placeholder><Label text="Sem encomendas encontradas."/></placeholder>
+        <placeholder><Label text="No orders found."/></placeholder>
     </TableView>
 
-    <!-- Detalhe -->
+    <!-- Detail panel -->
     <VBox styleClass="form-card" spacing="10">
         <Label fx:id="lblOrderDetail" styleClass="info-text" wrapText="true"
-               text="Selecione uma encomenda para ver o detalhe."/>
-        <!-- Painel de gestão: só visível para ADMIN e MANAGER -->
+               text="Select an order to view details."/>
+        <!-- Management panel: only visible to ADMIN and MANAGER -->
         <HBox fx:id="paneGestao" spacing="8" alignment="CENTER_LEFT">
-            <Label text="Alterar estado para:"/>
+            <Label text="Change status to:"/>
             <ComboBox fx:id="cmbNewStatus" prefWidth="140"/>
-            <Button text="Atualizar Estado" onAction="#handleUpdateStatus" styleClass="btn-primary"/>
+            <Button text="Update Status" onAction="#handleUpdateStatus" styleClass="btn-primary"/>
         </HBox>
         <Label fx:id="lblStatus" styleClass="status-label" wrapText="true"/>
     </VBox>

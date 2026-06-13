@@ -7,9 +7,9 @@
       styleClass="view-root" spacing="16">
 
     <HBox alignment="CENTER_LEFT" spacing="12">
-        <Label text="Gestão de Utilizadores" styleClass="view-title"/>
+        <Label text="User Management" styleClass="view-title"/>
         <Region HBox.hgrow="ALWAYS"/>
-        <Button text="Atualizar" onAction="#handleRefresh" styleClass="btn-secondary"/>
+        <Button text="Refresh" onAction="#handleRefresh" styleClass="btn-secondary"/>
     </HBox>
 
     <TableView fx:id="tableUsers" VBox.vgrow="ALWAYS">
@@ -17,15 +17,15 @@
             <TableColumn fx:id="colUsername" text="Username"  prefWidth="140"/>
             <TableColumn fx:id="colEmail"    text="Email"     prefWidth="200"/>
             <TableColumn fx:id="colRole"     text="Role"      prefWidth="100"/>
-            <TableColumn fx:id="colStore"    text="Loja"      prefWidth="160"/>
-            <TableColumn fx:id="colActive"   text="Estado"    prefWidth="80"/>
+            <TableColumn fx:id="colStore"    text="Store"     prefWidth="160"/>
+            <TableColumn fx:id="colActive"   text="Status"    prefWidth="80"/>
         </columns>
-        <placeholder><Label text="Sem utilizadores registados."/></placeholder>
+        <placeholder><Label text="No users registered."/></placeholder>
     </TableView>
 
     <HBox spacing="12" alignment="BOTTOM_LEFT">
         <VBox styleClass="form-card" spacing="10" HBox.hgrow="ALWAYS">
-            <Label fx:id="lblFormTitle" text="Novo Utilizador" styleClass="card-title"/>
+            <Label fx:id="lblFormTitle" text="New User" styleClass="card-title"/>
             <GridPane hgap="12" vgap="8">
                 <columnConstraints>
                     <ColumnConstraints minWidth="110"/>
@@ -45,21 +45,21 @@
                     <Label text="Password"/>
                     <Label text=" *" styleClass="required-mark"/>
                 </HBox>
-                <PasswordField fx:id="txtPassword" promptText="deixar vazio para não alterar" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <PasswordField fx:id="txtPassword" promptText="leave blank to keep current" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
                 <HBox GridPane.columnIndex="0" GridPane.rowIndex="3" spacing="2">
                     <Label text="Role"/>
                     <Label text=" *" styleClass="required-mark"/>
                 </HBox>
                 <ComboBox fx:id="cmbRole" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-                <Label text="Loja:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                <Label text="Store:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
                 <ComboBox fx:id="cmbStore" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
             </GridPane>
-            <Label text="* Campo obrigatório" styleClass="required-hint"/>
+            <Label text="* Required field" styleClass="required-hint"/>
             <HBox spacing="8">
-                <Button fx:id="btnSave"       text="Criar Utilizador"   onAction="#handleSave"         styleClass="btn-primary"/>
-                <Button fx:id="btnToggle"     text="Ativar / Desativar" onAction="#handleToggleActive" styleClass="btn-secondary"/>
-                <Button fx:id="btnDelete"     text="Apagar"             onAction="#handleDelete"       styleClass="btn-danger"/>
-                <Button fx:id="btnCancelEdit" text="Cancelar"           onAction="#handleCancelEdit"   styleClass="btn-secondary"/>
+                <Button fx:id="btnSave"       text="Save User"          onAction="#handleSave"         styleClass="btn-primary"/>
+                <Button fx:id="btnToggle"     text="Enable / Disable"   onAction="#handleToggleActive" styleClass="btn-secondary"/>
+                <Button fx:id="btnDelete"     text="Delete"             onAction="#handleDelete"       styleClass="btn-danger"/>
+                <Button fx:id="btnCancelEdit" text="Cancel"             onAction="#handleCancelEdit"   styleClass="btn-secondary"/>
             </HBox>
             <Label fx:id="lblStatus" styleClass="status-label" wrapText="true"/>
         </VBox>

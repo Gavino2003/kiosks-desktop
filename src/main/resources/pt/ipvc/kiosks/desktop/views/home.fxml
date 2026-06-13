@@ -1,51 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="pt.ipvc.kiosks.desktop.controller.HomeController"
-      styleClass="view-root" spacing="24" alignment="TOP_LEFT">
+      styleClass="view-root" spacing="20">
 
     <Label text="Dashboard" styleClass="view-title"/>
 
-    <GridPane hgap="16" vgap="16">
-        <columnConstraints>
-            <ColumnConstraints minWidth="200" prefWidth="220"/>
-            <ColumnConstraints minWidth="200" prefWidth="220"/>
-            <ColumnConstraints minWidth="200" prefWidth="220"/>
-            <ColumnConstraints minWidth="200" prefWidth="220"/>
-        </columnConstraints>
-
-        <!-- Encomendas Pendentes -->
-        <VBox styleClass="metric-card" GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="8">
-            <Label text="Encomendas Pendentes" styleClass="metric-label"/>
-            <Label fx:id="lblPendingOrders" text="—" styleClass="metric-value"/>
+    <!-- KPI cards row -->
+    <HBox spacing="16">
+        <VBox styleClass="kpi-card kpi-blue" spacing="6" HBox.hgrow="ALWAYS">
+            <Label text="PENDING ORDERS" styleClass="kpi-label"/>
+            <Label fx:id="lblPendingOrders" text="—" styleClass="kpi-value"/>
+            <Label text="awaiting fulfilment" styleClass="kpi-sub"/>
         </VBox>
-
-        <!-- Produtos Ativos -->
-        <VBox styleClass="metric-card" GridPane.columnIndex="1" GridPane.rowIndex="0" spacing="8">
-            <Label text="Produtos Ativos" styleClass="metric-label"/>
-            <Label fx:id="lblTotalProducts" text="—" styleClass="metric-value"/>
+        <VBox styleClass="kpi-card kpi-green" spacing="6" HBox.hgrow="ALWAYS">
+            <Label text="ACTIVE PRODUCTS" styleClass="kpi-label"/>
+            <Label fx:id="lblTotalProducts" text="—" styleClass="kpi-value"/>
+            <Label text="across all stores" styleClass="kpi-sub"/>
         </VBox>
-
-        <!-- Quiosques Ativos -->
-        <VBox styleClass="metric-card" GridPane.columnIndex="2" GridPane.rowIndex="0" spacing="8">
-            <Label text="Quiosques Ativos" styleClass="metric-label"/>
-            <Label fx:id="lblActiveKiosks" text="—" styleClass="metric-value"/>
+        <VBox styleClass="kpi-card kpi-purple" spacing="6" HBox.hgrow="ALWAYS">
+            <Label text="ACTIVE KIOSKS" styleClass="kpi-label"/>
+            <Label fx:id="lblActiveKiosks" text="—" styleClass="kpi-value"/>
+            <Label text="online terminals" styleClass="kpi-sub"/>
         </VBox>
-
-        <!-- Utilizadores -->
-        <VBox styleClass="metric-card" GridPane.columnIndex="3" GridPane.rowIndex="0" spacing="8">
-            <Label text="Utilizadores" styleClass="metric-label"/>
-            <Label fx:id="lblTotalUsers" text="—" styleClass="metric-value"/>
+        <VBox styleClass="kpi-card kpi-orange" spacing="6" HBox.hgrow="ALWAYS">
+            <Label text="USERS" styleClass="kpi-label"/>
+            <Label fx:id="lblTotalUsers" text="—" styleClass="kpi-value"/>
+            <Label text="registered accounts" styleClass="kpi-sub"/>
         </VBox>
-    </GridPane>
+    </HBox>
 
-    <VBox styleClass="info-card" spacing="6">
-        <Label text="Sobre o sistema" styleClass="card-title"/>
-        <Label text="Sistema de Gestão de Quiosques Interativos — IPVC Projeto II 2025/2026"
-               styleClass="info-text" wrapText="true"/>
-        <Label text="Gerencie lojas, quiosques, catálogos de produtos e encomendas a partir deste backoffice."
-               styleClass="info-text" wrapText="true"/>
+    <!-- Quick actions -->
+    <VBox styleClass="section-card" spacing="12">
+        <Label text="Quick Actions" styleClass="section-title"/>
+        <HBox spacing="10">
+            <Button text="📦  View Orders"   styleClass="quick-btn" prefWidth="160"/>
+            <Button text="🛍  Products"       styleClass="quick-btn" prefWidth="160"/>
+            <Button text="🏪  Stores"         styleClass="quick-btn" prefWidth="160"/>
+            <Button text="📟  Kiosks"         styleClass="quick-btn" prefWidth="160"/>
+        </HBox>
     </VBox>
+
+    <!-- System info -->
+    <VBox styleClass="section-card" spacing="8">
+        <Label text="System Information" styleClass="section-title"/>
+        <HBox spacing="32">
+            <VBox spacing="4">
+                <Label text="APPLICATION" styleClass="info-key"/>
+                <Label text="Kiosks BackOffice" styleClass="info-val"/>
+            </VBox>
+            <VBox spacing="4">
+                <Label text="VERSION" styleClass="info-key"/>
+                <Label text="1.0.0 — IPVC 2025/2026" styleClass="info-val"/>
+            </VBox>
+            <VBox spacing="4">
+                <Label text="CORE API" styleClass="info-key"/>
+                <Label text="http://localhost:8090" styleClass="info-val"/>
+            </VBox>
+            <VBox spacing="4">
+                <Label text="STATUS" styleClass="info-key"/>
+                <Label text="● Connected" styleClass="info-val status-connected"/>
+            </VBox>
+        </HBox>
+    </VBox>
+
 </VBox>

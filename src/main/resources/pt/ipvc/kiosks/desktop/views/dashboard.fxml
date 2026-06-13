@@ -6,7 +6,7 @@
             fx:controller="pt.ipvc.kiosks.desktop.controller.DashboardController"
             styleClass="dashboard-root">
 
-    <!-- Barra de topo -->
+    <!-- Top bar -->
     <top>
         <HBox styleClass="topbar" alignment="CENTER_LEFT" spacing="12">
             <Label text="Kiosks BackOffice" styleClass="topbar-title"/>
@@ -14,35 +14,36 @@
             <Label fx:id="welcomeLabel" styleClass="topbar-user"/>
             <Label text=" | " styleClass="topbar-sep"/>
             <Label fx:id="roleLabel" styleClass="topbar-role"/>
-            <Button text="Sair" onAction="#handleLogout" styleClass="btn-logout"/>
+            <Button text="Sign out" onAction="#handleLogout" styleClass="btn-logout"/>
         </HBox>
     </top>
 
-    <!-- Menu lateral -->
+    <!-- Sidebar -->
     <left>
         <VBox fx:id="sideMenu" styleClass="sidebar" spacing="4" minWidth="180">
-            <Label text="MENU" styleClass="sidebar-section"/>
-            <Button fx:id="btnDashboard" text="Dashboard" onAction="#showHome"
+            <Label text="MAIN" styleClass="sidebar-section"/>
+            <Button fx:id="btnDashboard" text="Dashboard"  onAction="#showHome"
                     styleClass="sidebar-btn" maxWidth="Infinity"/>
-            <Button fx:id="btnOrders"    text="Encomendas" onAction="#showOrders"
+            <Button fx:id="btnOrders"    text="Orders"     onAction="#showOrders"
                     styleClass="sidebar-btn" maxWidth="Infinity"/>
             <Button fx:id="btnStock"     text="Stock"      onAction="#showStock"
                     styleClass="sidebar-btn" maxWidth="Infinity"/>
             <Separator fx:id="sepGestao"/>
-            <Label fx:id="lblGestao" text="GESTÃO" styleClass="sidebar-section"/>
-            <Button fx:id="btnProducts"  text="Produtos"    onAction="#showProducts"
+            <Label fx:id="lblGestao" text="MANAGEMENT" styleClass="sidebar-section"/>
+            <Button fx:id="btnProducts"  text="Products"   onAction="#showProducts"
                     styleClass="sidebar-btn" maxWidth="Infinity"/>
-            <Button fx:id="btnStores"    text="Lojas"       onAction="#showStores"
+            <Button fx:id="btnStores"    text="Stores"     onAction="#showStores"
                     styleClass="sidebar-btn" maxWidth="Infinity"/>
-            <Button fx:id="btnKiosks"    text="Quiosques"   onAction="#showKiosks"
+            <Button fx:id="btnKiosks"    text="Kiosks"     onAction="#showKiosks"
                     styleClass="sidebar-btn" maxWidth="Infinity"/>
-            <Button fx:id="btnUsers"     text="Utilizadores" onAction="#showUsers"
+            <Button fx:id="btnUsers"     text="Users"      onAction="#showUsers"
                     styleClass="sidebar-btn" maxWidth="Infinity"/>
         </VBox>
     </left>
 
-    <!-- Área de conteúdo -->
+    <!-- Content area -->
     <center>
         <StackPane fx:id="contentArea" styleClass="content-area"/>
     </center>
+
 </BorderPane>
