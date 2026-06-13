@@ -15,7 +15,7 @@
     </top>
 
     <center>
-        <StackPane>
+        <StackPane style="-fx-padding: 40 0 0 0;">
             <VBox alignment="CENTER" spacing="14" styleClass="login-card" maxWidth="380">
                 <Label text="Sign In" styleClass="card-title"/>
 
