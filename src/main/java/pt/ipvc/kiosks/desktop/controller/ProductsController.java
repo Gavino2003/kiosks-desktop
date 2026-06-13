@@ -207,13 +207,17 @@ public class ProductsController implements Initializable {
         txtSku.setText(product.sku        != null ? product.sku      : "");
         txtImageUrl.setText(product.imageUrl != null ? product.imageUrl : "");
 
-        List<CategoryDto> categories = cmbFormCategory.getItems();
-        if (categories != null) {
-            categories.stream().filter(c -> c != null && c.id.equals(product.categoryId))
-                    .findFirst().ifPresent(c -> cmbFormCategory.setValue(c));
-        }
-
+        // load categories for the product's first store so the combobox is always populated
         List<Long> assignedStoreIds = product.storeIds != null ? product.storeIds : List.of();
+        if (!assignedStoreIds.isEmpty()) {
+            List<CategoryDto> cats = api.getCategories(assignedStoreIds.get(0));
+            cmbFormCategory.setItems(FXCollections.observableArrayList(cats));
+        }
+        cmbFormCategory.getItems().stream()
+                .filter(c -> c != null && c.id.equals(product.categoryId))
+                .findFirst()
+                .ifPresent(cmbFormCategory::setValue);
+
         vboxStores.getChildren().forEach(n -> {
             if (n instanceof CheckBox cb) {
                 StoreDto store = (StoreDto) cb.getUserData();
