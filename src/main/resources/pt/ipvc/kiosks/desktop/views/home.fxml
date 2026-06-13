@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="pt.ipvc.kiosks.desktop.controller.HomeController"
+      styleClass="view-root" spacing="24" alignment="TOP_LEFT">
+
+    <Label text="Dashboard" styleClass="view-title"/>
+
+    <GridPane hgap="16" vgap="16">
+        <columnConstraints>
+            <ColumnConstraints minWidth="200" prefWidth="220"/>
+            <ColumnConstraints minWidth="200" prefWidth="220"/>
+            <ColumnConstraints minWidth="200" prefWidth="220"/>
+            <ColumnConstraints minWidth="200" prefWidth="220"/>
+        </columnConstraints>
+
+        <!-- Encomendas Pendentes -->
+        <VBox styleClass="metric-card" GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="8">
+            <Label text="Encomendas Pendentes" styleClass="metric-label"/>
+            <Label fx:id="lblPendingOrders" text="—" styleClass="metric-value"/>
+        </VBox>
+
+        <!-- Produtos Ativos -->
+        <VBox styleClass="metric-card" GridPane.columnIndex="1" GridPane.rowIndex="0" spacing="8">
+            <Label text="Produtos Ativos" styleClass="metric-label"/>
+            <Label fx:id="lblTotalProducts" text="—" styleClass="metric-value"/>
+        </VBox>
+
+        <!-- Quiosques Ativos -->
+        <VBox styleClass="metric-card" GridPane.columnIndex="2" GridPane.rowIndex="0" spacing="8">
+            <Label text="Quiosques Ativos" styleClass="metric-label"/>
+            <Label fx:id="lblActiveKiosks" text="—" styleClass="metric-value"/>
+        </VBox>
+
+        <!-- Utilizadores -->
+        <VBox styleClass="metric-card" GridPane.columnIndex="3" GridPane.rowIndex="0" spacing="8">
+            <Label text="Utilizadores" styleClass="metric-label"/>
+            <Label fx:id="lblTotalUsers" text="—" styleClass="metric-value"/>
+        </VBox>
+    </GridPane>
+
+    <VBox styleClass="info-card" spacing="6">
+        <Label text="Sobre o sistema" styleClass="card-title"/>
+        <Label text="Sistema de Gestão de Quiosques Interativos — IPVC Projeto II 2025/2026"
+               styleClass="info-text" wrapText="true"/>
+        <Label text="Gerencie lojas, quiosques, catálogos de produtos e encomendas a partir deste backoffice."
+               styleClass="info-text" wrapText="true"/>
+    </VBox>
+</VBox>

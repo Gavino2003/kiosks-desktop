@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="pt.ipvc.kiosks.desktop.controller.LoginController"
+      alignment="CENTER" spacing="0" styleClass="login-root">
+
+    <VBox alignment="CENTER" spacing="6" styleClass="login-header">
+        <Label text="Kiosks BackOffice" styleClass="login-title"/>
+        <Label text="Sistema de Gestão de Quiosques" styleClass="login-subtitle"/>
+    </VBox>
+
+    <VBox alignment="CENTER" spacing="14" styleClass="login-card">
+        <Label text="Autenticação" styleClass="card-title"/>
+
+        <VBox spacing="4">
+            <Label text="Username" styleClass="field-label"/>
+            <TextField fx:id="usernameField" promptText="Introduza o username" styleClass="text-field"/>
+        </VBox>
+
+        <VBox spacing="4">
+            <Label text="Password" styleClass="field-label"/>
+            <PasswordField fx:id="passwordField" promptText="Introduza a password" styleClass="text-field"
+                          onAction="#handleLogin"/>
+        </VBox>
+
+        <Label fx:id="errorLabel" styleClass="error-label" wrapText="true"/>
+
+        <Button text="Entrar" onAction="#handleLogin" styleClass="btn-primary" maxWidth="Infinity"/>
+    </VBox>
+
+    <Label text="IPVC — Projeto II 2025/2026" styleClass="login-footer"/>
+</VBox>

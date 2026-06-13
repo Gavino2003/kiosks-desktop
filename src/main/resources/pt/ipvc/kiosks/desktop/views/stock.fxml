@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="pt.ipvc.kiosks.desktop.controller.StockController"
+      styleClass="view-root" spacing="16">
+
+    <HBox alignment="CENTER_LEFT" spacing="12">
+        <Label text="Stock em Armazém" styleClass="view-title"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="Atualizar" onAction="#handleRefresh" styleClass="btn-secondary"/>
+    </HBox>
+
+    <HBox spacing="12" alignment="CENTER_LEFT" styleClass="filter-bar">
+        <Label text="Categoria:"/>
+        <ComboBox fx:id="cmbCategory" prefWidth="180"/>
+        <Button text="Filtrar" onAction="#handleFilter" styleClass="btn-secondary"/>
+        <Separator orientation="VERTICAL"/>
+        <Label text="Pesquisar:"/>
+        <TextField fx:id="txtSearch" promptText="nome do produto..." prefWidth="200"/>
+    </HBox>
+
+    <TableView fx:id="tableStock" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colName"     text="Produto"    prefWidth="210"/>
+            <TableColumn fx:id="colSku"      text="SKU"        prefWidth="110"/>
+            <TableColumn fx:id="colCategory" text="Categoria"  prefWidth="130"/>
+            <TableColumn fx:id="colPrice"    text="Preço"      prefWidth="80"/>
+            <TableColumn fx:id="colQty"      text="Stock"      prefWidth="70"/>
+            <TableColumn fx:id="colStatus"   text="Estado"     prefWidth="80"/>
+        </columns>
+        <placeholder><Label text="Sem produtos encontrados."/></placeholder>
+    </TableView>
+
+    <Label fx:id="lblInfo" styleClass="status-label" wrapText="true"/>
+
+</VBox>

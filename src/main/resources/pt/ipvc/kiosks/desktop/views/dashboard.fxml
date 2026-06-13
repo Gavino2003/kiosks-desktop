@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="pt.ipvc.kiosks.desktop.controller.DashboardController"
+            styleClass="dashboard-root">
+
+    <!-- Barra de topo -->
+    <top>
+        <HBox styleClass="topbar" alignment="CENTER_LEFT" spacing="12">
+            <Label text="Kiosks BackOffice" styleClass="topbar-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="welcomeLabel" styleClass="topbar-user"/>
+            <Label text=" | " styleClass="topbar-sep"/>
+            <Label fx:id="roleLabel" styleClass="topbar-role"/>
+            <Button text="Sair" onAction="#handleLogout" styleClass="btn-logout"/>
+        </HBox>
+    </top>
+
+    <!-- Menu lateral -->
+    <left>
+        <VBox fx:id="sideMenu" styleClass="sidebar" spacing="4" minWidth="180">
+            <Label text="MENU" styleClass="sidebar-section"/>
+            <Button fx:id="btnDashboard" text="Dashboard" onAction="#showHome"
+                    styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button fx:id="btnOrders"    text="Encomendas" onAction="#showOrders"
+                    styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button fx:id="btnStock"     text="Stock"      onAction="#showStock"
+                    styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Separator fx:id="sepGestao"/>
+            <Label fx:id="lblGestao" text="GESTÃO" styleClass="sidebar-section"/>
+            <Button fx:id="btnProducts"  text="Produtos"    onAction="#showProducts"
+                    styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button fx:id="btnStores"    text="Lojas"       onAction="#showStores"
+                    styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button fx:id="btnKiosks"    text="Quiosques"   onAction="#showKiosks"
+                    styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button fx:id="btnUsers"     text="Utilizadores" onAction="#showUsers"
+                    styleClass="sidebar-btn" maxWidth="Infinity"/>
+        </VBox>
+    </left>
+
+    <!-- Área de conteúdo -->
+    <center>
+        <StackPane fx:id="contentArea" styleClass="content-area"/>
+    </center>
+</BorderPane>

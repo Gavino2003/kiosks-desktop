@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="pt.ipvc.kiosks.desktop.controller.UsersController"
+      styleClass="view-root" spacing="16">
+
+    <HBox alignment="CENTER_LEFT" spacing="12">
+        <Label text="Gestão de Utilizadores" styleClass="view-title"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="Atualizar" onAction="#handleRefresh" styleClass="btn-secondary"/>
+    </HBox>
+
+    <TableView fx:id="tableUsers" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colUsername" text="Username"  prefWidth="140"/>
+            <TableColumn fx:id="colEmail"    text="Email"     prefWidth="200"/>
+            <TableColumn fx:id="colRole"     text="Role"      prefWidth="100"/>
+            <TableColumn fx:id="colStore"    text="Loja"      prefWidth="160"/>
+            <TableColumn fx:id="colActive"   text="Estado"    prefWidth="80"/>
+        </columns>
+        <placeholder><Label text="Sem utilizadores registados."/></placeholder>
+    </TableView>
+
+    <HBox spacing="12" alignment="BOTTOM_LEFT">
+        <VBox styleClass="form-card" spacing="10" HBox.hgrow="ALWAYS">
+            <Label fx:id="lblFormTitle" text="Novo Utilizador" styleClass="card-title"/>
+            <GridPane hgap="12" vgap="8">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="110"/>
+                    <ColumnConstraints minWidth="180" hgrow="ALWAYS"/>
+                </columnConstraints>
+                <HBox GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="2">
+                    <Label text="Username"/>
+                    <Label text=" *" styleClass="required-mark"/>
+                </HBox>
+                <TextField fx:id="txtUsername" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                <HBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="2">
+                    <Label text="Email"/>
+                    <Label text=" *" styleClass="required-mark"/>
+                </HBox>
+                <TextField fx:id="txtEmail" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <HBox fx:id="lblPassword" GridPane.columnIndex="0" GridPane.rowIndex="2" spacing="2">
+                    <Label text="Password"/>
+                    <Label text=" *" styleClass="required-mark"/>
+                </HBox>
+                <PasswordField fx:id="txtPassword" promptText="deixar vazio para não alterar" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <HBox GridPane.columnIndex="0" GridPane.rowIndex="3" spacing="2">
+                    <Label text="Role"/>
+                    <Label text=" *" styleClass="required-mark"/>
+                </HBox>
+                <ComboBox fx:id="cmbRole" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                <Label text="Loja:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                <ComboBox fx:id="cmbStore" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+            </GridPane>
+            <Label text="* Campo obrigatório" styleClass="required-hint"/>
+            <HBox spacing="8">
+                <Button fx:id="btnSave"       text="Criar Utilizador"   onAction="#handleSave"         styleClass="btn-primary"/>
+                <Button fx:id="btnToggle"     text="Ativar / Desativar" onAction="#handleToggleActive" styleClass="btn-secondary"/>
+                <Button fx:id="btnDelete"     text="Apagar"             onAction="#handleDelete"       styleClass="btn-danger"/>
+                <Button fx:id="btnCancelEdit" text="Cancelar"           onAction="#handleCancelEdit"   styleClass="btn-secondary"/>
+            </HBox>
+            <Label fx:id="lblStatus" styleClass="status-label" wrapText="true"/>
+        </VBox>
+    </HBox>
+</VBox>

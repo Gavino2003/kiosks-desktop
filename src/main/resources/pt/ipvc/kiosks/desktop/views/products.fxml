@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="pt.ipvc.kiosks.desktop.controller.ProductsController"
+      styleClass="view-root" spacing="16">
+
+    <HBox alignment="CENTER_LEFT" spacing="12">
+        <Label text="Gestão de Produtos" styleClass="view-title"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label text="Filtro de loja:"/>
+        <ComboBox fx:id="cmbStore" prefWidth="200"/>
+        <Button text="Atualizar" onAction="#handleRefresh" styleClass="btn-secondary"/>
+    </HBox>
+
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <TextField fx:id="txtSearch" promptText="Pesquisar por nome ou SKU…" prefWidth="240"/>
+        <ComboBox fx:id="cmbCategory" prefWidth="200"/>
+        <Button text="Pesquisar" onAction="#handleSearch" styleClass="btn-secondary"/>
+    </HBox>
+
+    <TableView fx:id="tableProducts" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colName"     text="Nome"      prefWidth="200"/>
+            <TableColumn fx:id="colPrice"    text="Preço"     prefWidth="80"/>
+            <TableColumn fx:id="colSku"      text="SKU"       prefWidth="110"/>
+            <TableColumn fx:id="colCategory" text="Categoria" prefWidth="120"/>
+            <TableColumn fx:id="colStores"   text="Lojas"     prefWidth="180"/>
+            <TableColumn fx:id="colActive"   text="Estado"    prefWidth="70"/>
+        </columns>
+        <placeholder><Label text="Sem produtos para a seleção actual."/></placeholder>
+    </TableView>
+
+    <VBox styleClass="form-card" spacing="10">
+        <Label fx:id="lblFormTitle" text="Novo Produto" styleClass="card-title"/>
+        <GridPane hgap="12" vgap="8">
+            <columnConstraints>
+                <ColumnConstraints minWidth="100"/>
+                <ColumnConstraints minWidth="160" hgrow="ALWAYS"/>
+                <ColumnConstraints minWidth="100"/>
+                <ColumnConstraints minWidth="160" hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <HBox GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="2">
+                <Label text="Nome"/><Label text=" *" styleClass="required-mark"/>
+            </HBox>
+            <TextField fx:id="txtName" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+            <HBox GridPane.columnIndex="2" GridPane.rowIndex="0" spacing="2">
+                <Label text="Preço (€)"/><Label text=" *" styleClass="required-mark"/>
+            </HBox>
+            <TextField fx:id="txtPrice" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
+            <Label text="SKU:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <TextField fx:id="txtSku" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+            <HBox GridPane.columnIndex="2" GridPane.rowIndex="1" spacing="2">
+                <Label text="Categoria"/><Label text=" *" styleClass="required-mark"/>
+            </HBox>
+            <ComboBox fx:id="cmbFormCategory" maxWidth="Infinity" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+
+            <Label text="Descrição:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <TextField fx:id="txtDescription" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.columnSpan="3"/>
+
+            <Label text="URL Imagem:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+            <TextField fx:id="txtImageUrl" promptText="https://…" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.columnSpan="3"/>
+
+            <!-- lojas: checkboxes geradas em código dentro deste VBox -->
+            <HBox GridPane.columnIndex="0" GridPane.rowIndex="4" spacing="2">
+                <Label text="Lojas"/><Label text=" *" styleClass="required-mark"/>
+            </HBox>
+            <VBox fx:id="vboxStores" spacing="4" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.columnSpan="3"/>
+        </GridPane>
+        <Label text="* Campo obrigatório" styleClass="required-hint"/>
+        <HBox spacing="8">
+            <Button fx:id="btnSave"       text="Criar Produto"      onAction="#handleSave"         styleClass="btn-primary"/>
+            <Button text="Ativar / Desativar" onAction="#handleDeactivate" styleClass="btn-secondary"/>
+            <Button fx:id="btnDelete"     text="Apagar"             onAction="#handleDelete"       styleClass="btn-danger"/>
+            <Button fx:id="btnCancelEdit" text="Cancelar"           onAction="#handleCancelEdit"   styleClass="btn-secondary"/>
+        </HBox>
+        <Label fx:id="lblStatus" styleClass="status-label" wrapText="true"/>
+    </VBox>
+</VBox>

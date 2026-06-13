@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="pt.ipvc.kiosks.desktop.controller.StoresController"
+      styleClass="view-root" spacing="16">
+
+    <HBox alignment="CENTER_LEFT" spacing="12">
+        <Label text="Gestão de Lojas" styleClass="view-title"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="Atualizar" onAction="#handleRefresh" styleClass="btn-secondary"/>
+    </HBox>
+
+    <TableView fx:id="tableStores" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colName"   text="Nome da Loja" prefWidth="200"/>
+            <TableColumn fx:id="colType"   text="Tipo"         prefWidth="110"/>
+            <TableColumn fx:id="colCity"   text="Cidade"       prefWidth="140"/>
+            <TableColumn fx:id="colActive" text="Estado"       prefWidth="90"/>
+        </columns>
+        <placeholder><Label text="Sem lojas registadas."/></placeholder>
+    </TableView>
+
+    <VBox styleClass="form-card" spacing="10">
+        <Label fx:id="lblFormTitle" text="Nova Loja" styleClass="card-title"/>
+        <GridPane hgap="12" vgap="8">
+            <columnConstraints>
+                <ColumnConstraints minWidth="110"/>
+                <ColumnConstraints minWidth="180" hgrow="ALWAYS"/>
+                <ColumnConstraints minWidth="110"/>
+                <ColumnConstraints minWidth="180" hgrow="ALWAYS"/>
+            </columnConstraints>
+            <HBox GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="2">
+                <Label text="Nome"/>
+                <Label text=" *" styleClass="required-mark"/>
+            </HBox>
+            <TextField fx:id="txtName" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+            <Label text="Tipo:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+            <ComboBox fx:id="cmbType" maxWidth="Infinity" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+            <Label text="Morada:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <TextField fx:id="txtAddress" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            <Label text="Cidade:" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+            <TextField fx:id="txtCity" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+            <Label text="Cód. Postal:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <TextField fx:id="txtPostal" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        </GridPane>
+        <Label text="* Campo obrigatório" styleClass="required-hint"/>
+        <HBox spacing="8">
+            <Button fx:id="btnSave"       text="Criar Loja"        onAction="#handleSave"         styleClass="btn-primary"/>
+            <Button text="Ativar / Desativar" onAction="#handleToggleActive" styleClass="btn-secondary"/>
+            <Button fx:id="btnDelete"     text="Apagar"            onAction="#handleDelete"       styleClass="btn-danger"/>
+            <Button fx:id="btnCancelEdit" text="Cancelar"          onAction="#handleCancelEdit"   styleClass="btn-secondary"/>
+        </HBox>
+        <Label fx:id="lblStatus" styleClass="status-label" wrapText="true"/>
+    </VBox>
+</VBox>
