@@ -37,10 +37,10 @@
     <VBox styleClass="section-card" spacing="12">
         <Label text="Quick Actions" styleClass="section-title"/>
         <HBox spacing="10">
-            <Button text="📦  View Orders"   styleClass="quick-btn" prefWidth="160"/>
-            <Button text="🛍  Products"       styleClass="quick-btn" prefWidth="160"/>
-            <Button text="🏪  Stores"         styleClass="quick-btn" prefWidth="160"/>
-            <Button text="📟  Kiosks"         styleClass="quick-btn" prefWidth="160"/>
+            <Button text="📦  View Orders"   onAction="#goOrders"   styleClass="quick-btn" prefWidth="160"/>
+            <Button text="🛍  Products"       onAction="#goProducts" styleClass="quick-btn" prefWidth="160"/>
+            <Button text="🏪  Stores"         onAction="#goStores"   styleClass="quick-btn" prefWidth="160"/>
+            <Button text="📟  Kiosks"         onAction="#goKiosks"   styleClass="quick-btn" prefWidth="160"/>
         </HBox>
     </VBox>
 

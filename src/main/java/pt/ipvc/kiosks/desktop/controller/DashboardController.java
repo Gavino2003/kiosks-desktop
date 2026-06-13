@@ -40,7 +40,7 @@ public class DashboardController implements Initializable {
         var user    = SessionManager.getInstance().getCurrentUser();
         var session = SessionManager.getInstance();
 
-        welcomeLabel.setText("Bem-vindo, " + user.username);
+        welcomeLabel.setText("Welcome, " + user.username);
         roleLabel.setText(user.roleName);
 
         boolean admin   = session.isAdmin();
@@ -67,6 +67,8 @@ public class DashboardController implements Initializable {
     @FXML private void showProducts() { loadView("products.fxml"); }
     @FXML private void showOrders()   { loadView("orders.fxml"); }
     @FXML private void showStock()    { loadView("stock.fxml"); }
+
+    public void navigateTo(String fxml) { loadView(fxml); }
 
     @FXML
     private void handleLogout() {

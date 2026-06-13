@@ -24,12 +24,13 @@ public class HomeController implements Initializable {
     @FXML private Label lblTotalUsers;
 
     @Autowired private CoreApiClient api;
+    @Autowired private DashboardController dashboard;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        List<OrderDto>  pending = api.getOrders("PENDING", null, null);
-        List<KioskDto>  kiosks  = api.getKiosks(null);
-        List<UserDto>   users   = api.getUsers();
+        List<OrderDto>   pending  = api.getOrders("PENDING", null, null);
+        List<KioskDto>   kiosks   = api.getKiosks(null);
+        List<UserDto>    users    = api.getUsers();
         List<ProductDto> products = api.getProducts(null, null, null);
 
         lblPendingOrders.setText(String.valueOf(pending.size()));
@@ -39,4 +40,9 @@ public class HomeController implements Initializable {
         lblTotalProducts.setText(String.valueOf(
                 products.stream().filter(p -> Boolean.TRUE.equals(p.active)).count()));
     }
+
+    @FXML private void goOrders()   { dashboard.navigateTo("orders.fxml"); }
+    @FXML private void goProducts() { dashboard.navigateTo("products.fxml"); }
+    @FXML private void goStores()   { dashboard.navigateTo("stores.fxml"); }
+    @FXML private void goKiosks()   { dashboard.navigateTo("kiosks.fxml"); }
 }
