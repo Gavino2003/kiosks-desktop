@@ -129,7 +129,6 @@ public class ProductsController implements Initializable {
 
         if (!filterOptions.isEmpty()) cmbStore.getSelectionModel().selectFirst();
 
-        txtSearch.textProperty().addListener((obs, o, n) -> refreshTable());
         cmbCategory.getSelectionModel().selectedItemProperty().addListener((obs, o, n) -> refreshTable());
 
         tableProducts.getSelectionModel().selectedItemProperty().addListener((obs, o, product) -> {

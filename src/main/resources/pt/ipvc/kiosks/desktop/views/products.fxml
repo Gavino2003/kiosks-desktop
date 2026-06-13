@@ -15,7 +15,8 @@
     </HBox>
 
     <HBox spacing="8" alignment="CENTER_LEFT">
-        <TextField fx:id="txtSearch" promptText="Search by name or SKU…" prefWidth="240"/>
+        <TextField fx:id="txtSearch" promptText="Search by name or SKU…" prefWidth="240"
+                   onAction="#handleSearch"/>
         <ComboBox fx:id="cmbCategory" prefWidth="200"/>
         <Button text="Search" onAction="#handleSearch" styleClass="btn-secondary"/>
     </HBox>
