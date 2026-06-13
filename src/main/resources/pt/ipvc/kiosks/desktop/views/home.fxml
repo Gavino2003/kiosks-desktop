@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="pt.ipvc.kiosks.desktop.controller.HomeController"
@@ -9,7 +8,6 @@
 
     <Label text="Dashboard" styleClass="view-title"/>
 
-    <!-- KPI cards row -->
     <HBox spacing="16">
         <VBox styleClass="kpi-card kpi-blue" spacing="6" HBox.hgrow="ALWAYS">
             <Label text="PENDING ORDERS" styleClass="kpi-label"/>
@@ -33,18 +31,16 @@
         </VBox>
     </HBox>
 
-    <!-- Quick actions -->
     <VBox styleClass="section-card" spacing="12">
         <Label text="Quick Actions" styleClass="section-title"/>
         <HBox spacing="10">
-            <Button text="📦  View Orders"   onAction="#goOrders"   styleClass="quick-btn" prefWidth="160"/>
-            <Button text="🛍  Products"       onAction="#goProducts" styleClass="quick-btn" prefWidth="160"/>
-            <Button text="🏪  Stores"         onAction="#goStores"   styleClass="quick-btn" prefWidth="160"/>
-            <Button text="📟  Kiosks"         onAction="#goKiosks"   styleClass="quick-btn" prefWidth="160"/>
+            <Button text="View Orders" onAction="#goOrders"   styleClass="quick-btn" prefWidth="160"/>
+            <Button text="Products"    onAction="#goProducts" styleClass="quick-btn" prefWidth="160"/>
+            <Button text="Stores"      onAction="#goStores"   styleClass="quick-btn" prefWidth="160"/>
+            <Button text="Kiosks"      onAction="#goKiosks"   styleClass="quick-btn" prefWidth="160"/>
         </HBox>
     </VBox>
 
-    <!-- System info -->
     <VBox styleClass="section-card" spacing="8">
         <Label text="System Information" styleClass="section-title"/>
         <HBox spacing="32">
@@ -62,7 +58,7 @@
             </VBox>
             <VBox spacing="4">
                 <Label text="STATUS" styleClass="info-key"/>
-                <Label text="● Connected" styleClass="info-val status-connected"/>
+                <Label text="Connected" styleClass="info-val status-connected"/>
             </VBox>
         </HBox>
     </VBox>

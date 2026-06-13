@@ -35,13 +35,13 @@ public class LoginController implements Initializable {
         String username = usernameField.getText().trim();
         String password = passwordField.getText();
 
-        if (username.isEmpty() && password.isEmpty()) { showError("Preencha o username e a password."); return; }
-        if (username.isEmpty()) { showError("Preencha o username."); return; }
-        if (password.isEmpty()) { showError("Preencha a password."); return; }
+        if (username.isEmpty() && password.isEmpty()) { showError("Please enter your username and password."); return; }
+        if (username.isEmpty()) { showError("Please enter your username."); return; }
+        if (password.isEmpty()) { showError("Please enter your password."); return; }
 
         UserDto user = api.login(username, password);
         if (user == null) {
-            showError("Credenciais inválidas.");
+            showError("Invalid credentials. Please try again.");
             passwordField.requestFocus();
             return;
         }
@@ -50,10 +50,17 @@ public class LoginController implements Initializable {
         try {
             MainApp.showDashboard();
         } catch (Exception e) {
-            showError("Erro ao abrir dashboard: " + e.getMessage());
+            showError("Failed to open dashboard: " + e.getMessage());
         }
     }
 
-    private void showError(String msg) { errorLabel.setText(msg); errorLabel.setVisible(true); }
-    private void clearError()          { errorLabel.setText(""); errorLabel.setVisible(false); }
+    private void showError(String msg) {
+        errorLabel.setText(msg);
+        errorLabel.setVisible(true);
+    }
+
+    private void clearError() {
+        errorLabel.setText("");
+        errorLabel.setVisible(false);
+    }
 }

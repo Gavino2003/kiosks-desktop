@@ -27,6 +27,7 @@ public class StockController implements Initializable {
     @FXML private TableColumn<ProductDto,String> colPrice;
     @FXML private TableColumn<ProductDto,String> colQty;
     @FXML private TableColumn<ProductDto,String> colStatus;
+
     @FXML private ComboBox<CategoryDto> cmbCategory;
     @FXML private TextField             txtSearch;
     @FXML private Label                 lblInfo;
@@ -49,19 +50,19 @@ public class StockController implements Initializable {
         colQty.setCellValueFactory(c      -> new SimpleStringProperty(
                 c.getValue().stockQuantity != null ? String.valueOf(c.getValue().stockQuantity) : "—"));
         colStatus.setCellValueFactory(c   -> new SimpleStringProperty(
-                Boolean.TRUE.equals(c.getValue().active) ? "Ativo" : "Inativo"));
+                Boolean.TRUE.equals(c.getValue().active) ? "Active" : "Inactive"));
 
-        tableStock.setRowFactory(tv -> new TableRow<ProductDto>() {
+        tableStock.setRowFactory(tv -> new TableRow<>() {
             @Override
-            protected void updateItem(ProductDto ps, boolean empty) {
-                super.updateItem(ps, empty);
-                if (ps == null || isSelected()) {
+            protected void updateItem(ProductDto product, boolean empty) {
+                super.updateItem(product, empty);
+                if (product == null || isSelected()) {
                     setStyle("");
-                } else if (!Boolean.TRUE.equals(ps.active)) {
+                } else if (!Boolean.TRUE.equals(product.active)) {
                     setStyle("-fx-text-fill: #aaa;");
-                } else if (ps.stockQuantity != null && ps.stockQuantity == 0) {
+                } else if (product.stockQuantity != null && product.stockQuantity == 0) {
                     setStyle("-fx-background-color: #fde8e8;");
-                } else if (ps.stockQuantity != null && ps.stockQuantity <= 3) {
+                } else if (product.stockQuantity != null && product.stockQuantity <= 3) {
                     setStyle("-fx-background-color: #fef3e2;");
                 } else {
                     setStyle("");
@@ -69,18 +70,15 @@ public class StockController implements Initializable {
             }
         });
 
-        javafx.util.StringConverter<CategoryDto> catConverter = new javafx.util.StringConverter<>() {
-            public String      toString(CategoryDto c) { return c == null ? "Todas as categorias" : c.categoryName; }
+        cmbCategory.setConverter(new javafx.util.StringConverter<>() {
+            public String      toString(CategoryDto c) { return c == null ? "All categories" : c.categoryName; }
             public CategoryDto fromString(String s)    { return null; }
-        };
-        cmbCategory.setConverter(catConverter);
+        });
 
-        List<CategoryDto> cats = userStoreId != null
-                ? api.getCategories(userStoreId)
-                : List.of();
+        List<CategoryDto> categories = userStoreId != null ? api.getCategories(userStoreId) : List.of();
         List<CategoryDto> options = new ArrayList<>();
         options.add(null);
-        options.addAll(cats);
+        options.addAll(categories);
         cmbCategory.setItems(FXCollections.observableArrayList(options));
         cmbCategory.getSelectionModel().selectFirst();
 
@@ -91,24 +89,25 @@ public class StockController implements Initializable {
 
     private void loadStock(Long categoryId) {
         if (userStoreId == null) {
-            lblInfo.setText("Utilizador sem loja atribuída.");
+            lblInfo.setText("No store assigned to this user.");
             return;
         }
 
         String search = txtSearch.getText().trim();
-        List<ProductDto> all = api.getProducts(userStoreId, categoryId,
+        List<ProductDto> products = api.getProducts(userStoreId, categoryId,
                 search.isEmpty() ? null : search);
 
-        tableStock.setItems(FXCollections.observableArrayList(all));
-        long ativos = all.stream().filter(p -> Boolean.TRUE.equals(p.active)).count();
-        lblInfo.setText(all.size() + " produto(s) — " + ativos + " ativo(s), "
-                + (all.size() - ativos) + " inativo(s)");
+        tableStock.setItems(FXCollections.observableArrayList(products));
+
+        long active = products.stream().filter(p -> Boolean.TRUE.equals(p.active)).count();
+        lblInfo.setText(products.size() + " product(s) — " + active + " active, "
+                + (products.size() - active) + " inactive");
     }
 
     @FXML
     private void handleFilter() {
-        CategoryDto cat = cmbCategory.getValue();
-        loadStock(cat != null ? cat.id : null);
+        CategoryDto category = cmbCategory.getValue();
+        loadStock(category != null ? category.id : null);
     }
 
     @FXML

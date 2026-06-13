@@ -26,20 +26,20 @@ public class UsersController implements Initializable {
     @FXML private TableColumn<UserDto,String> colStore;
     @FXML private TableColumn<UserDto,String> colActive;
 
-    @FXML private Label            lblFormTitle;
-    @FXML private TextField        txtUsername;
-    @FXML private TextField        txtEmail;
-    @FXML private PasswordField    txtPassword;
-    @FXML private ComboBox<String> cmbRole;
+    @FXML private Label              lblFormTitle;
+    @FXML private TextField          txtUsername;
+    @FXML private TextField          txtEmail;
+    @FXML private PasswordField      txtPassword;
+    @FXML private ComboBox<String>   cmbRole;
     @FXML private ComboBox<StoreDto> cmbStore;
-    @FXML private Button           btnSave;
-    @FXML private Button           btnDelete;
-    @FXML private Button           btnCancelEdit;
-    @FXML private Label            lblStatus;
+    @FXML private Button             btnSave;
+    @FXML private Button             btnDelete;
+    @FXML private Button             btnCancelEdit;
+    @FXML private Label              lblStatus;
 
     @Autowired private CoreApiClient api;
 
-    private UserDto editingUser = null;
+    private UserDto        editingUser  = null;
     private List<StoreDto> storeOptions = new ArrayList<>();
 
     @Override
@@ -51,17 +51,15 @@ public class UsersController implements Initializable {
         colStore.setCellValueFactory(c    -> new SimpleStringProperty(
                 c.getValue().storeName != null ? c.getValue().storeName : "— (global)"));
         colActive.setCellValueFactory(c   -> new SimpleStringProperty(
-                Boolean.TRUE.equals(c.getValue().active) ? "Ativo" : "Inativo"));
+                Boolean.TRUE.equals(c.getValue().active) ? "Active" : "Inactive"));
 
         cmbRole.setItems(FXCollections.observableArrayList("ADMIN", "MANAGER", "OPERATOR"));
         cmbRole.getSelectionModel().selectFirst();
 
-        javafx.util.StringConverter<StoreDto> storeConverter = new javafx.util.StringConverter<>() {
-            public String   toString(StoreDto s) { return s == null ? "— (sem loja)" : s.storeName; }
+        cmbStore.setConverter(new javafx.util.StringConverter<>() {
+            public String   toString(StoreDto s) { return s == null ? "— (no store)" : s.storeName; }
             public StoreDto fromString(String s) { return null; }
-        };
-        cmbStore.setConverter(storeConverter);
-        storeOptions = new ArrayList<>();
+        });
         storeOptions.add(null);
         storeOptions.addAll(api.getActiveStores());
         cmbStore.setItems(FXCollections.observableArrayList(storeOptions));
@@ -83,8 +81,8 @@ public class UsersController implements Initializable {
 
     private void enterCreateMode() {
         editingUser = null;
-        lblFormTitle.setText("Novo Utilizador");
-        btnSave.setText("Criar Utilizador");
+        lblFormTitle.setText("New User");
+        btnSave.setText("Create User");
         btnCancelEdit.setVisible(false); btnCancelEdit.setManaged(false);
         btnDelete.setVisible(false);     btnDelete.setManaged(false);
         txtUsername.setDisable(false);
@@ -98,8 +96,8 @@ public class UsersController implements Initializable {
 
     private void enterEditMode(UserDto user) {
         editingUser = user;
-        lblFormTitle.setText("Editar Utilizador");
-        btnSave.setText("Guardar Alterações");
+        lblFormTitle.setText("Edit User");
+        btnSave.setText("Save Changes");
         btnCancelEdit.setVisible(true); btnCancelEdit.setManaged(true);
         btnDelete.setVisible(true);     btnDelete.setManaged(true);
         txtUsername.setText(user.username);
@@ -128,8 +126,11 @@ public class UsersController implements Initializable {
 
     @FXML
     private void handleSave() {
-        if (editingUser == null) handleCreate();
-        else handleUpdate();
+        if (editingUser == null) {
+            handleCreate();
+        } else {
+            showStatus("Use the Enable/Disable button to change user status.", false);
+        }
     }
 
     private void handleCreate() {
@@ -140,43 +141,40 @@ public class UsersController implements Initializable {
         StoreDto store    = cmbStore.getValue();
 
         if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            showStatus("Preencha todos os campos obrigatórios.", true); return;
+            showStatus("Please fill in all required fields.", true);
+            return;
         }
         if (("MANAGER".equals(role) || "OPERATOR".equals(role)) && store == null) {
-            showStatus("Manager e Operator precisam de uma loja atribuída.", true); return;
+            showStatus("Manager and Operator roles require an assigned store.", true);
+            return;
         }
+
         try {
             api.createUser(username, password, email, role, store != null ? store.id : null);
-            showStatus("Utilizador criado com sucesso.", false);
+            showStatus("User created successfully.", false);
             enterCreateMode();
             loadUsers();
         } catch (Exception e) {
-            showStatus("Erro: " + e.getMessage(), true);
+            showStatus("Error: " + e.getMessage(), true);
         }
-    }
-
-    private void handleUpdate() {
-        // A API de auth não expõe endpoint de update de utilizador nesta versão;
-        // apenas toggle active. Mostra mensagem informativa.
-        showStatus("Para editar utilizadores use a API diretamente.", false);
     }
 
     @FXML
     private void handleToggleActive() {
         UserDto selected = tableUsers.getSelectionModel().getSelectedItem();
-        if (selected == null) { showStatus("Selecione um utilizador.", true); return; }
+        if (selected == null) { showStatus("Please select a user.", true); return; }
         try {
             api.toggleUserActive(selected.id);
-            showStatus("Estado alterado.", false);
+            showStatus("User status updated.", false);
             loadUsers();
         } catch (Exception e) {
-            showStatus("Erro: " + e.getMessage(), true);
+            showStatus("Error: " + e.getMessage(), true);
         }
     }
 
     @FXML
     private void handleDelete() {
-        showStatus("Eliminação de utilizadores não suportada via API nesta versão.", true);
+        showStatus("User deletion is not supported in this version.", true);
     }
 
     @FXML private void handleCancelEdit() { enterCreateMode(); }

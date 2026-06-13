@@ -25,21 +25,21 @@ public class KiosksController implements Initializable {
     @FXML private TableColumn<KioskDto,String> colStatus;
     @FXML private TableColumn<KioskDto,String> colStore;
 
-    @FXML private Label            lblFormTitle;
-    @FXML private TextField        txtName;
-    @FXML private TextField        txtSerial;
-    @FXML private TextField        txtModel;
+    @FXML private Label              lblFormTitle;
+    @FXML private TextField          txtName;
+    @FXML private TextField          txtSerial;
+    @FXML private TextField          txtModel;
     @FXML private ComboBox<StoreDto> cmbStore;
-    @FXML private ComboBox<String> cmbStatus;
-    @FXML private Button           btnSave;
-    @FXML private Button           btnDelete;
-    @FXML private Button           btnCancelEdit;
-    @FXML private Label            lblStatus;
+    @FXML private ComboBox<String>   cmbStatus;
+    @FXML private Button             btnSave;
+    @FXML private Button             btnDelete;
+    @FXML private Button             btnCancelEdit;
+    @FXML private Label              lblStatus;
 
     @Autowired private CoreApiClient api;
 
-    private KioskDto  editingKiosk = null;
-    private List<StoreDto> stores;
+    private KioskDto        editingKiosk = null;
+    private List<StoreDto>  stores;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -73,8 +73,8 @@ public class KiosksController implements Initializable {
 
     private void enterCreateMode() {
         editingKiosk = null;
-        lblFormTitle.setText("Novo Quiosque");
-        btnSave.setText("Criar Quiosque");
+        lblFormTitle.setText("New Kiosk");
+        btnSave.setText("Create Kiosk");
         btnCancelEdit.setVisible(false); btnCancelEdit.setManaged(false);
         btnDelete.setVisible(false);     btnDelete.setManaged(false);
         txtName.clear(); txtSerial.clear(); txtModel.clear();
@@ -87,8 +87,8 @@ public class KiosksController implements Initializable {
 
     private void enterEditMode(KioskDto kiosk) {
         editingKiosk = kiosk;
-        lblFormTitle.setText("Editar Quiosque");
-        btnSave.setText("Guardar Alterações");
+        lblFormTitle.setText("Edit Kiosk");
+        btnSave.setText("Save Changes");
         btnCancelEdit.setVisible(true); btnCancelEdit.setManaged(true);
         btnDelete.setVisible(true);     btnDelete.setManaged(true);
         txtName.setText(kiosk.kioskName);
@@ -120,39 +120,42 @@ public class KiosksController implements Initializable {
         String   status = cmbStatus.getValue();
 
         if (name.isEmpty() || store == null) {
-            showStatus("Nome e loja são obrigatórios.", true); return;
+            showStatus("Name and store are required.", true);
+            return;
         }
 
         try {
             if (editingKiosk == null) {
-                api.createKiosk(name, serial.isEmpty() ? null : serial,
-                        model.isEmpty() ? null : model, store.id);
-                showStatus("Quiosque criado com sucesso.", false);
+                api.createKiosk(name,
+                        serial.isEmpty() ? null : serial,
+                        model.isEmpty()  ? null : model,
+                        store.id);
+                showStatus("Kiosk created successfully.", false);
             } else {
                 api.updateKiosk(editingKiosk.id, name,
                         serial.isEmpty() ? null : serial,
                         model.isEmpty()  ? null : model,
                         store.id, status);
-                showStatus("Quiosque atualizado com sucesso.", false);
+                showStatus("Kiosk updated successfully.", false);
             }
             enterCreateMode();
             loadKiosks();
         } catch (Exception e) {
-            showStatus("Erro: " + e.getMessage(), true);
+            showStatus("Error: " + e.getMessage(), true);
         }
     }
 
     @FXML
     private void handleDelete() {
-        if (editingKiosk == null) { showStatus("Selecione um quiosque.", true); return; }
+        if (editingKiosk == null) { showStatus("Please select a kiosk.", true); return; }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                "Apagar o quiosque \"" + editingKiosk.kioskName + "\" definitivamente?",
+                "Permanently delete kiosk \"" + editingKiosk.kioskName + "\"?",
                 ButtonType.YES, ButtonType.NO);
-        alert.setTitle("Confirmar eliminação");
+        alert.setTitle("Confirm deletion");
         alert.setHeaderText(null);
         alert.showAndWait().ifPresent(bt -> {
             if (bt == ButtonType.YES) {
-                showStatus("Eliminação via API não suportada nesta versão.", true);
+                showStatus("Deletion is not supported in this version.", true);
             }
         });
     }
